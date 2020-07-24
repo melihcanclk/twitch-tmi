@@ -1,0 +1,41 @@
+<html>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </script>
+  <body>
+    <form action="/?" method="get">
+      <button type="submit" class="btn btn-primary">Go Back</button>
+    </form>
+    <!-- Add a placeholder for the Twitch embed -->
+    <div id="twitch-embed"></div>
+    
+    <!-- Load the Twitch embed script -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <!--
+      Create a Twitch.Embed object that will render
+      within the "twitch-embed" root element.
+    -->
+    <script type="text/javascript">
+      var url = document.URL;
+      var streamer = ''
+      for(var i = url.length - 2;i>0 && url[i] != '/';--i){
+        streamer += url[i]
+      }
+      streamer = streamer.split("").reverse().join("");
+        var embed = new Twitch.Embed("twitch-embed", {
+            width: window.screen.width / 2.2,
+            height: "90%",
+            channel: streamer,
+            layout: "video",
+            autoplay: true,
+            allowfullscreen:false
+        });
+
+        embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+        var player = embed.getPlayer();
+        player.play();
+        });
+    </script>
+  </body>
+</html>
